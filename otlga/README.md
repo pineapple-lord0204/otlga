@@ -104,17 +104,6 @@ python test_ablation.py --config all
   - Entropic Optimal Transport (OT)
   - OT-guided Gated Fusion
 
-## 📊 Performance
-
-Performance on MIMIC-CXR test set:
-
-| Metric | Image-to-Text | Text-to-Image | Average |
-|--------|---------------|---------------|---------|
-| **R@1** | 45.81% | 81.29% | 63.55% |
-| **R@5** | - | - | - |
-| **R@10** | - | - | - |
-
-For detailed ablation experiment results, please refer to `ABLATION_STUDY.md`.
 
 ## 🔬 Ablation Experiments
 
@@ -190,13 +179,10 @@ If you use this model, please cite:
 }
 ```
 
-## 📜 License
-
-[Please add your license information]
 
 ## 👥 Authors
 
-[Please add author information]
+Yiran Wang
 
 ## 🙏 Acknowledgments
 
