@@ -3,126 +3,126 @@
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.9.0+-orange.svg)](https://pytorch.org/)
 
-**OTLGA** (Optimal Transport with Local-Global Attention) 是一个用于医学影像和放射学报告双向检索的深度学习模型。
+**OTLGA** (Optimal Transport with Local-Global Attention) is a deep learning model for bidirectional retrieval between medical images and radiology reports.
 
-## 🎯 核心创新
+## 🎯 Core Innovations
 
-1. **局部-全局注意力 (LGA)**: 增强局部特征与全局上下文的交互
-2. **熵正则最优传输 (OT)**: 实现细粒度的图像-文本对齐
-3. **OT引导门控融合**: 动态融合对齐后的跨模态特征
+1. **Local-Global Attention (LGA)**: Enhances interaction between local features and global context
+2. **Entropic Optimal Transport (OT)**: Achieves fine-grained image-text alignment
+3. **OT-guided Gated Fusion**: Dynamically fuses aligned cross-modal features
 
-## 📁 文件结构
+## 📁 File Structure
 
 ```
 otlga_github/
-├── otlga_model.py              # 核心模型定义 (OTLGAModel)
-├── otlga_model_ablation.py     # 消融实验模型 (OTLGAModelAblation)
-├── otlga_dataset.py            # 数据集类 (OTLGADataset)
-├── vit_custom.py               # Vision Transformer 实现
-├── modules.py                  # 辅助损失模块 (SentenceContrastive, UncertaintyAuxiliary)
-├── train_otlga.py              # 主训练脚本
-├── test_otlga.py               # 测试评估脚本
-├── train_ablation.py           # 消融实验训练脚本
-├── test_ablation.py            # 消融实验测试脚本
-├── requirements.txt            # 依赖包列表
-├── README.md                   # 本文档
-└── ABLATION_STUDY.md           # 消融实验说明
+├── otlga_model.py              # Core model definition (OTLGAModel)
+├── otlga_model_ablation.py     # Ablation experiment model (OTLGAModelAblation)
+├── otlga_dataset.py            # Dataset class (OTLGADataset)
+├── vit_custom.py               # Vision Transformer implementation
+├── modules.py                  # Auxiliary loss modules (SentenceContrastive, UncertaintyAuxiliary)
+├── train_otlga.py              # Main training script
+├── test_otlga.py               # Testing and evaluation script
+├── train_ablation.py           # Ablation experiment training script
+├── test_ablation.py            # Ablation experiment testing script
+├── requirements.txt            # Dependencies list
+├── README.md                   # This document
+└── ABLATION_STUDY.md           # Ablation experiment documentation
 ```
 
-## 🚀 快速开始
+## 🚀 Quick Start
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 数据准备
+### Data Preparation
 
-使用 MIMIC-CXR 数据集，需要准备：
+Using the MIMIC-CXR dataset, you need to prepare:
 
-1. **图像数据**: 组织在数据目录下的图像文件
-2. **CSV标注文件**: 包含以下字段的CSV文件
-   - `filename`: 图像文件名
-   - `split`: 数据集划分 (train/valid/test)
-   - `label`: 标签信息
-   - `org_caption`: 原始报告文本
+1. **Image Data**: Image files organized in the data directory
+2. **CSV Annotation File**: A CSV file containing the following fields
+   - `filename`: Image filename
+   - `split`: Dataset split (train/valid/test)
+   - `label`: Label information
+   - `org_caption`: Original report text
 
-**注意**: 需要修改代码中的路径配置：
-- `train_otlga.py`: 修改 `data_root` 和 `csv_path`
-- `test_otlga.py`: 修改 `data_root` 和 `csv_path`
-- `train_ablation.py`: 修改 `data_root` 和 `csv_path`
-- `test_ablation.py`: 修改 `data_root` 和 `csv_path`
+**Note**: You need to modify path configurations in the code:
+- `train_otlga.py`: Modify `data_root` and `csv_path`
+- `test_otlga.py`: Modify `data_root` and `csv_path`
+- `train_ablation.py`: Modify `data_root` and `csv_path`
+- `test_ablation.py`: Modify `data_root` and `csv_path`
 
-### 训练模型
+### Train Model
 
-#### 训练完整 OTLGA 模型
+#### Train Full OTLGA Model
 
 ```bash
 python train_otlga.py
 ```
 
-#### 训练消融实验配置
+#### Train Ablation Experiment Configurations
 
 ```bash
-# 训练单个配置
+# Train single configuration
 python train_ablation.py --config baseline
 python train_ablation.py --config lga
 python train_ablation.py --config ot
 python train_ablation.py --config full
 
-# 训练所有配置
+# Train all configurations
 python train_ablation.py --config all
 ```
 
-### 测试模型
+### Test Model
 
-#### 测试完整模型
+#### Test Full Model
 
 ```bash
 python test_otlga.py
 ```
 
-#### 测试消融实验配置
+#### Test Ablation Experiment Configurations
 
 ```bash
-# 测试单个配置
+# Test single configuration
 python test_ablation.py --config baseline
 python test_ablation.py --config full
 
-# 测试所有配置
+# Test all configurations
 python test_ablation.py --config all
 ```
 
-## 🏗️ 模型架构
+## 🏗️ Model Architecture
 
-- **视觉编码器**: ViT-Base (768维)
-- **文本编码器**: BERT-Base (768维)
-- **共同嵌入空间**: 256维
-- **核心模块**: 
+- **Visual Encoder**: ViT-Base (768 dimensions)
+- **Text Encoder**: BERT-Base (768 dimensions)
+- **Common Embedding Space**: 256 dimensions
+- **Core Modules**: 
   - Local-Global Attention (LGA)
   - Entropic Optimal Transport (OT)
   - OT-guided Gated Fusion
 
 
-## 🔬 消融实验
+## 🔬 Ablation Experiments
 
-项目包含完整的消融实验框架，可以评估各个模块的贡献：
+The project includes a complete ablation experiment framework to evaluate the contribution of each module:
 
-- **baseline**: 基线模型（投影层 + ITC损失 + 句子级对比损失）
-- **lga**: 仅LGA模块
-- **ot**: 仅OT模块
+- **baseline**: Baseline model (projection layers + ITC loss + sentence-level contrastive loss)
+- **lga**: LGA module only
+- **ot**: OT module only
 - **gated_fusion**: OT + Gated Fusion
 - **lga_ot**: LGA + OT
 - **lga_gated**: LGA + OT + Gated Fusion
 - **ot_gated**: OT + Gated Fusion
-- **full**: 完整OTLGA模型
+- **full**: Full OTLGA model
 
-详细说明请参考 `ABLATION_STUDY.md`。
+For detailed description, please refer to `ABLATION_STUDY.md`.
 
-## 💾 依赖
+## 💾 Dependencies
 
-主要依赖包（详见 `requirements.txt`）：
+Main dependencies (see `requirements.txt` for details):
 
 - `torch >= 1.9.0`
 - `torchvision >= 0.10.0`
@@ -132,16 +132,16 @@ python test_ablation.py --config all
 - `tqdm >= 4.62.0`
 - `Pillow >= 8.3.0`
 
-## 📝 使用示例
+## 📝 Usage Example
 
-### 训练示例
+### Training Example
 
 ```python
 from otlga_model import OTLGAModel
 from otlga_dataset import OTLGADataset
 from torch.utils.data import DataLoader
 
-# 初始化模型
+# Initialize model
 model = OTLGAModel(
     vit_type='vit_base',
     freeze_vit=False,
@@ -149,7 +149,7 @@ model = OTLGAModel(
     c_embed_dim=256
 )
 
-# 加载数据
+# Load data
 dataset = OTLGADataset(
     data_root="path/to/data",
     csv_path="path/to/data.csv",
@@ -159,27 +159,28 @@ dataset = OTLGADataset(
 
 dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
 
-# 训练循环
+# Training loop
 for batch in dataloader:
     image, text_input, label = batch
     v_final, t_final, ot_loss, T_fused = model(image, text_input)
-    # ... 计算损失并反向传播
+    # ... compute loss and backpropagate
 ```
 
-## 📄 引用
+## 📄 Citation
 
-如果使用本模型，请引用：
-
-
-
-## 📜 许可证
+If you use this model, please cite:
 
 
 
-## 👥 作者
+## 📜 License
+
+
+
+## 👥 Authors
 
 Yiran Wang
 
-## 🙏 致谢
+## 🙏 Acknowledgments
 
-感谢 MIMIC-CXR 数据集提供者以及相关开源项目的贡献。
+Thanks to the MIMIC-CXR dataset providers and contributors of related open-source projects.
+
